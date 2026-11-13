@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class IndexFunctionality : MonoBehaviour
 {
@@ -59,28 +60,28 @@ public class IndexFunctionality : MonoBehaviour
         }
     }
     //called when the player logs in through the log in panel
-    public void AttemptLogIn() {
+    public async void AttemptLogIn() {
         Debug.Log("attempting to log in");
-        bool inputsFilled = String.IsNullOrEmpty(l_userField.text) && String.IsNullOrEmpty(l_passField.text);
+        bool inputsFilled = !String.IsNullOrEmpty(l_userField.text) && !String.IsNullOrEmpty(l_passField.text);
         if (inputsFilled) {
-            Debug.LogWarning("oops, inputs aren't completely filled yet.");
+            bool userCreated = await DatabaseManager.LoginUser(r_userField.text, r_passField.text);
+            // SceneManager.LoadScene(2);
         } else {
-            // do second check here
-            SceneManager.LoadScene(2);
+            Debug.LogWarning("oops, inputs aren't completely filled yet.");
         }
     }
 
-    public void AttemptRegister() {
+    public async void AttemptRegister() {
         Debug.Log("attempting to register");
-        bool inputsFilled = String.IsNullOrEmpty(r_userField.text)
-        && String.IsNullOrEmpty(r_passField.text)
-        && String.IsNullOrEmpty(r_emailField.text)
-        && String.IsNullOrEmpty(r_repassField.text);
+        bool inputsFilled = !String.IsNullOrEmpty(r_userField.text)
+        && !String.IsNullOrEmpty(r_passField.text)
+        && !String.IsNullOrEmpty(r_emailField.text)
+        && !String.IsNullOrEmpty(r_repassField.text);
         if (inputsFilled) {
-            Debug.LogWarning("oops, inputs aren't completely filled yet.");
+            bool userCreated = await DatabaseManager.CreateUser(r_emailField.text, r_userField.text, r_passField.text, r_repassField.text);
+            // SceneManager.LoadScene(2);
         } else {
-            // do second check here
-            SceneManager.LoadScene(2);
+            Debug.LogWarning("oops, inputs aren't completely filled yet.");
         }
     }
 }
