@@ -4,6 +4,7 @@ using UnityEngine;
 public class User {
     public string username;
     public string email;
+    public UserRole role;
 
     public User(string un, string em) {
         username = un;
