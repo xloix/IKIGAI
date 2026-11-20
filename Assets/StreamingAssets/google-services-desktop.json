@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "822067919936",
+    "project_id": "ikigai-e33d1",
+    "storage_bucket": "ikigai-e33d1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822067919936:android:c2cce3b1a8090fe2fbb3a5",
+        "android_client_info": {
+          "package_name": "com.sweetbook.ikigai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtLvVJ0jWzUryeFXpsjvdPthuZTeJ1dz0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
