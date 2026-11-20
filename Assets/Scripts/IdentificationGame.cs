@@ -78,15 +78,14 @@ public class IdentificationGame : MonoBehaviour {
             Invoke("HideUI", 2f);
             return;
         } else {
+            ++questionInd;
             Debug.Log("yippieee right answer!!@!");
-            StartCoroutine(StartLoadQuestion());
+            if (questionInd < 5) StartCoroutine(StartLoadQuestion());
             correctAnswer.SetActive(true);
             wrongAnswer.SetActive(false);
         }
 
-        if (questionInd < 5) {
-            questionInd++;
-        } else {
+        if (questionInd >= 5) {
             // congrats! results. back to home
             StartCoroutine(BackToHome());
         }

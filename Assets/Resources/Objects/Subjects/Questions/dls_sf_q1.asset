@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Question
   question: What utensil do you use to pierce food?
   answer: Fork
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 89459719503c1baaa979632507728c63, type: 3}

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Question
   question: What holds your food?
   answer: Plate
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 546fa36c75526969d9f71f66827ee43c, type: 3}

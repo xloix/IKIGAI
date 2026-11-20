@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Question
   question: What do you use to hold water with?
   answer: Cup
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 18ec0b1a4c6554117b68c4c9c004a96b, type: 3}
