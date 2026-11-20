@@ -12,6 +12,7 @@ public class IdentificationGame : MonoBehaviour {
     [SerializeField] GameObject AnswerItem;
     [SerializeField] GameObject correctAnswer, wrongAnswer;
     [SerializeField] Text questionText;
+    public static bool canAnswer {get; private set;}
     
 
     void Start() {
@@ -51,24 +52,22 @@ public class IdentificationGame : MonoBehaviour {
                 ca.answer = q.answer;
                 questionText.text = q.question;
                 if (curAnswer.sprite != null) ca.GetComponent<Image>().sprite = curAnswer.sprite;
-                continue;
+            } else {
+                ClickAnswer tempCA = Instantiate(AnswerItem, this.transform).GetComponent<ClickAnswer>();
+                Question tempQ = GetRandomQuestion();
+                while (tempQ != null && tempQ.answer == curAnswer.answer)
+                    tempQ = GetRandomQuestion();
+                // resize the object based on sprite textures
+                Debug.Log("#" + i + ": " + tempQ.answer);
+                tempCA.answer = tempQ.answer;
+                if (tempQ.sprite != null) tempCA.GetComponent<Image>().sprite = tempQ.sprite;
             }
-            ClickAnswer tempCA = Instantiate(AnswerItem, this.transform).GetComponent<ClickAnswer>();
-            Question tempQ = GetRandomQuestion();
-            string wrong = tempQ.answer;
-            while (wrong == curAnswer.answer) {
-                tempQ = GetRandomQuestion();
-                wrong = tempQ.answer;
-            }
-            // resize the object based on sprite textures
-            tempCA.answer = wrong;
-            if (tempQ.sprite != null) tempCA.GetComponent<Image>().sprite = tempQ.sprite;
         }
+        canAnswer = true;
     }
 
     void AttemptAnswer (InputAnswerEvent iae) {
-        Debug.Log(iae.answer);
-        Debug.Log(curAnswer.answer);
+        canAnswer = false;
 
         //check if iae is the correct answer of this round
         if (iae.answer != curAnswer.answer) {
@@ -95,6 +94,7 @@ public class IdentificationGame : MonoBehaviour {
     void HideUI() {
         correctAnswer.SetActive(false);
         wrongAnswer.SetActive(false);
+        canAnswer = true;
     }
 
     IEnumerator StartLoadQuestion() {
@@ -109,6 +109,8 @@ public class IdentificationGame : MonoBehaviour {
 
     public Question GetRandomQuestion() {
         int ansInd = UnityEngine.Random.Range(0, questions.Count);
+        if (ansInd < 0 || ansInd >= questions.Count) return null;
+        Debug.Log(ansInd + " of " + questions.Count + " questions");
         return questions[ansInd];
     }
 }

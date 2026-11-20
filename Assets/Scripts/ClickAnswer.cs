@@ -19,7 +19,6 @@ public class ClickAnswer : MonoBehaviour {
     }
     void AnswerItem() {
         // check if not its good to answer rn
-        Debug.Log("you answered " + answer);
         EventBus.Publish(new InputAnswerEvent(answer));
     }
 }
