@@ -4,6 +4,6 @@ using UnityEngine;
 public class InputAnswerEvent : IGameEvent {
     public string answer;
     public InputAnswerEvent (string a) {
-        answer = a;
+        this.answer = a;
     }
 }

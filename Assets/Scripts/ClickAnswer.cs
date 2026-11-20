@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ClickAnswer : MonoBehaviour {
     private Button button;
-    [SerializeField] private string answer;
+    public string answer;
 
     void Start() {
         button = GetComponent<Button>();
