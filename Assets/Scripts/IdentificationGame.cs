@@ -6,12 +6,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class IdentificationGame : MonoBehaviour {
-    [SerializeField] private List<Questions> questions = new List<Questions>();
-    [SerializeField] Questions curAnswer;
+    [SerializeField] private List<TestQuestions> questions = new List<TestQuestions>();
+    [SerializeField] TestQuestions curAnswer;
     int questionInd;
     [SerializeField] GameObject AnswerItem;
-    [SerializeField] GameObject correctAnswer, wrongAnswer;
-    [SerializeField] Text questionText;
+    [SerializeField] GameObject correctAnswer, wrongAnswer, resultScreen;
+    [SerializeField] Text questionText, resultsText;
+    [SerializeField] int rounds = 5;
+    int mistakes = 0;
     public static bool canAnswer {get; private set;}
     
 
@@ -31,12 +33,14 @@ public class IdentificationGame : MonoBehaviour {
     void InitializeGame() {
         //get dictionary database, convert to data
         questionInd = 0;
+        mistakes = 0;
+        resultScreen.SetActive(false);
         // get right answer, place within the area
         // get random answer that's not the right answer and not repeating
         LoadQuestion(GetRandomQuestion());
     }
 
-    void LoadQuestion (Questions q) {
+    void LoadQuestion (TestQuestions q) {
         foreach (Transform c in transform) {
             Destroy(c.gameObject);
         }
@@ -54,7 +58,7 @@ public class IdentificationGame : MonoBehaviour {
                 if (curAnswer.sprite != null) ca.GetComponent<Image>().sprite = curAnswer.sprite;
             } else {
                 ClickAnswer tempCA = Instantiate(AnswerItem, this.transform).GetComponent<ClickAnswer>();
-                Questions tempQ = GetRandomQuestion();
+                TestQuestions tempQ = GetRandomQuestion();
                 while (tempQ != null && tempQ.answer == curAnswer.answer)
                     tempQ = GetRandomQuestion();
                 // resize the object based on sprite textures
@@ -71,6 +75,7 @@ public class IdentificationGame : MonoBehaviour {
 
         //check if iae is the correct answer of this round
         if (iae.answer != curAnswer.answer) {
+            ++mistakes;
             Debug.Log("blehhh wrong answer");
             correctAnswer.SetActive(false);
             wrongAnswer.SetActive(true);
@@ -79,16 +84,16 @@ public class IdentificationGame : MonoBehaviour {
         } else {
             ++questionInd;
             Debug.Log("yippieee right answer!!@!");
-            if (questionInd < 5) StartCoroutine(StartLoadQuestion());
+            if (questionInd < rounds) StartCoroutine(StartLoadQuestion());
             correctAnswer.SetActive(true);
             wrongAnswer.SetActive(false);
         }
-
-        if (questionInd >= 5) {
-            // congrats! results. back to home
-            StartCoroutine(BackToHome());
+        if (questionInd >= rounds) {
+            correctAnswer.SetActive(false);
+            wrongAnswer.SetActive(false);
+            resultScreen.SetActive(true);
+            resultsText.text = "You succesfully identified your dining utensils with " + mistakes + " mistake" + (mistakes != 1 ? "s!" : "!");
         }
-        
     }
 
     void HideUI() {
@@ -102,12 +107,11 @@ public class IdentificationGame : MonoBehaviour {
         LoadQuestion(GetRandomQuestion());
     }
 
-    IEnumerator BackToHome() {
-        yield return new WaitForSeconds(5f);
+    public void BackToHome() {
         SceneManager.LoadScene(2);
     }
 
-    public Questions GetRandomQuestion() {
+    public TestQuestions GetRandomQuestion() {
         int ansInd = UnityEngine.Random.Range(0, questions.Count);
         if (ansInd < 0 || ansInd >= questions.Count) return null;
         Debug.Log(ansInd + " of " + questions.Count + " questions");

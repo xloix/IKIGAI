@@ -1,23 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-
-[CreateAssetMenu(menuName = "Custom/Question", fileName = "New Question")]
-public class Questions : ScriptableObject {
-    public string question, answer;
-    public Sprite sprite;
-    
-    public Questions (string q, string a, Sprite spr) {
-        this.question = q;
-        this.answer = a;
-        this.sprite = spr;
-    }
-    public Questions (string q, string a)
-    {
-        this.question = q;
-        this.answer = a;
-        this.sprite = null;
-    }
-}
 
 public class Question {
     public string id;
