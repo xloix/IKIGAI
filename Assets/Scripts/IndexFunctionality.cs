@@ -65,7 +65,8 @@ public class IndexFunctionality : MonoBehaviour
         bool inputsFilled = !String.IsNullOrEmpty(l_userField.text) && !String.IsNullOrEmpty(l_passField.text);
         if (inputsFilled) {
             bool userCreated = await DatabaseManager.LoginUser(r_userField.text, r_passField.text);
-            // SceneManager.LoadScene(2);
+            if (userCreated)
+                SceneManager.LoadScene(2);
         } else {
             Debug.LogWarning("oops, inputs aren't completely filled yet.");
         }
@@ -79,7 +80,8 @@ public class IndexFunctionality : MonoBehaviour
         && !String.IsNullOrEmpty(r_repassField.text);
         if (inputsFilled) {
             bool userCreated = await DatabaseManager.CreateUser(r_emailField.text, r_userField.text, r_passField.text, r_repassField.text);
-            // SceneManager.LoadScene(2);
+            if (userCreated)
+                SceneManager.LoadScene(2);
         } else {
             Debug.LogWarning("oops, inputs aren't completely filled yet.");
         }

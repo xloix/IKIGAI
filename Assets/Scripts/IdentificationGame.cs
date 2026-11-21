@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class IdentificationGame : MonoBehaviour {
-    [SerializeField] private List<Question> questions = new List<Question>();
-    [SerializeField] Question curAnswer;
+    [SerializeField] private List<Questions> questions = new List<Questions>();
+    [SerializeField] Questions curAnswer;
     int questionInd;
     [SerializeField] GameObject AnswerItem;
     [SerializeField] GameObject correctAnswer, wrongAnswer;
@@ -36,7 +36,7 @@ public class IdentificationGame : MonoBehaviour {
         LoadQuestion(GetRandomQuestion());
     }
 
-    void LoadQuestion (Question q) {
+    void LoadQuestion (Questions q) {
         foreach (Transform c in transform) {
             Destroy(c.gameObject);
         }
@@ -54,7 +54,7 @@ public class IdentificationGame : MonoBehaviour {
                 if (curAnswer.sprite != null) ca.GetComponent<Image>().sprite = curAnswer.sprite;
             } else {
                 ClickAnswer tempCA = Instantiate(AnswerItem, this.transform).GetComponent<ClickAnswer>();
-                Question tempQ = GetRandomQuestion();
+                Questions tempQ = GetRandomQuestion();
                 while (tempQ != null && tempQ.answer == curAnswer.answer)
                     tempQ = GetRandomQuestion();
                 // resize the object based on sprite textures
@@ -107,7 +107,7 @@ public class IdentificationGame : MonoBehaviour {
         SceneManager.LoadScene(2);
     }
 
-    public Question GetRandomQuestion() {
+    public Questions GetRandomQuestion() {
         int ansInd = UnityEngine.Random.Range(0, questions.Count);
         if (ansInd < 0 || ansInd >= questions.Count) return null;
         Debug.Log(ansInd + " of " + questions.Count + " questions");
